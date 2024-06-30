@@ -493,11 +493,12 @@ const AP_Param::Info Copter::var_info[] = {
     GOBJECTPTR(circle_nav, "CIRCLE_", AC_Circle),
 #endif
 
-#if MODE_HEART_ENABLED == ENABLED
-    // @Group: HEART_
-    // @Path: ../libraries/AC_WPNav/AC_Heart.cpp
-    GOBJECTPTR(heart_nav, "HEART_", AC_Heart),
-#endif
+// TODO: Parameters.hに`K_param_heart_nav`を追加してるのに、これを追加するとコンパイルエラーになる
+// #if MODE_HEART_ENABLED == ENABLED
+//     // @Group: HEART_
+//     // @Path: ../libraries/AC_WPNav/AC_Heart.cpp
+//     GOBJECTPTR(heart_nav, "HEART_", AC_Heart),
+// #endif
 
 // @Group: ATC_
 // @Path: ../libraries/AC_AttitudeControl/AC_AttitudeControl.cpp,../libraries/AC_AttitudeControl/AC_AttitudeControl_Multi.cpp,../libraries/AC_AttitudeControl/AC_AttitudeControl_Heli.cpp
