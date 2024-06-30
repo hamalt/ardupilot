@@ -562,6 +562,10 @@
   #error ModeAuto requires ModeCircle which is disabled
 #endif
 
+#if MODE_AUTO_ENABLED && !MODE_HEART_ENABLED
+  #error ModeAuto requires ModeHeart which is disabled
+#endif
+
 #if MODE_AUTO_ENABLED && !MODE_RTL_ENABLED
   #error ModeAuto requires ModeRTL which is disabled
 #endif

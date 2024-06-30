@@ -195,9 +195,12 @@ bool AC_Heart::update(float climb_rate_cms)
         target_z_cm
     };
     if (!is_zero(_radius)) {
-        // calculate target position
-        target.x += _radius * cosf(-_angle);
-        target.y += - _radius * sinf(-_angle);
+        // ハート型の計算式に基づいて目標位置を算出
+        float x = 16 * powf(sinf(_angle), 3);
+        float y = 13 * cosf(_angle) - 5 * cosf(2 * _angle) - 2 * cosf(3 * _angle) - cosf(4 * _angle);
+
+        target.x += x * 100; // convert to cm
+        target.y += y * 100; // convert to cm
 
         // heading is from vehicle to center of circle
         _yaw = get_bearing_cd(_inav.get_position_xy_cm(), _center.tofloat().xy());

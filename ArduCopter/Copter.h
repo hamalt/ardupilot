@@ -53,6 +53,7 @@
 #include <AC_WPNav/AC_WPNav.h>              // ArduCopter waypoint navigation library
 #include <AC_WPNav/AC_Loiter.h>             // ArduCopter Loiter Mode Library
 #include <AC_WPNav/AC_Circle.h>             // circle navigation library
+#include <AC_WPNav/AC_Heart.h>              // heart navigation library
 #include <AP_Declination/AP_Declination.h>  // ArduPilot Mega Declination Helper Library
 #include <AP_RCMapper/AP_RCMapper.h>        // RC input mapping library
 #include <AP_BattMonitor/AP_BattMonitor.h>  // Battery monitor library
@@ -487,6 +488,10 @@ private:
     AC_Circle *circle_nav;
 #endif
 
+#if MODE_HEART_ENABLED == ENABLED
+    AC_Heart *heart_nav;
+#endif
+
     // System Timers
     // --------------
     // arm_time_ms - Records when vehicle was armed. Will be Zero if we are disarmed.
@@ -678,6 +683,10 @@ private:
 #if MODE_CIRCLE_ENABLED == ENABLED
     bool get_circle_radius(float &radius_m) override;
     bool set_circle_rate(float rate_dps) override;
+#endif
+#if MODE_HEART_ENABLED == ENABLED
+    bool get_heart_radius(float &radius_m);
+    bool set_heart_rate(float rate_dps);
 #endif
 #if MODE_HEART_ENABLED == ENABLED
     // TODO: for heart code?

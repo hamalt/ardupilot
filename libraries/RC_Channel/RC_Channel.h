@@ -174,6 +174,7 @@ public:
         ALTHOLD   =           70, // althold mode
         FLOWHOLD  =           71, // flowhold mode
         CIRCLE    =           72, // circle mode
+        HEART     =           810, // heart mode
         DRIFT     =           73, // drift mode
         SAILBOAT_MOTOR_3POS = 74, // Sailboat motoring 3pos
         SURFACE_TRACKING =    75, // Surface tracking upwards or downwards
