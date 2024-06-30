@@ -7,17 +7,17 @@
 #include <AC_AttitudeControl/AC_PosControl.h>      // Position control library
 
 // loiter maximum velocities and accelerations
-#define AC_CIRCLE_RADIUS_DEFAULT    1000.0f     // radius of the circle in cm that the vehicle will fly
-#define AC_CIRCLE_RATE_DEFAULT      20.0f       // turn rate in deg/sec.  Positive to turn clockwise, negative for counter clockwise
-#define AC_CIRCLE_ANGULAR_ACCEL_MIN 2.0f        // angular acceleration should never be less than 2deg/sec
-#define AC_CIRCLE_RADIUS_MAX        200000.0f   // maximum allowed circle radius of 2km
+#define AC_HEART_RADIUS_DEFAULT    1000.0f     // radius of the circle in cm that the vehicle will fly
+#define AC_HEART_RATE_DEFAULT      20.0f       // turn rate in deg/sec.  Positive to turn clockwise, negative for counter clockwise
+#define AC_HEART_ANGULAR_ACCEL_MIN 2.0f        // angular acceleration should never be less than 2deg/sec
+#define AC_HEART_RADIUS_MAX        200000.0f   // maximum allowed circle radius of 2km
 
-class AC_Circle
+class AC_Heart
 {
 public:
 
     /// Constructor
-    AC_Circle(const AP_InertialNav& inav, const AP_AHRS_View& ahrs, AC_PosControl& pos_control);
+    AC_Heart(const AP_InertialNav& inav, const AP_AHRS_View& ahrs, AC_PosControl& pos_control);
 
     /// init - initialise circle controller setting center specifically
     ///     set terrain_alt to true if center.z should be interpreted as an alt-above-terrain. Rate should be +ve in deg/sec for cw turn
@@ -73,12 +73,12 @@ public:
     /// used by vehicle code to determine if get_yaw() is valid
     bool is_active() const;
 
-    // get_closest_point_on_circle - returns closest point on the circle
+    // get_closest_point_on_heart - returns closest point on the circle
     //  circle's center should already have been set
     //  closest point on the circle will be placed in result
     //  result's altitude (i.e. z) will be set to the circle_center's altitude
     //  if vehicle is at the center of the circle, the edge directly behind vehicle will be returned
-    void get_closest_point_on_circle(Vector3f &result) const;
+    void get_closest_point_on_heart(Vector3f &result) const;
 
     /// get horizontal distance to loiter target in cm
     float get_distance_to_target() const { return _pos_control.get_pos_error_xy_cm(); }
@@ -87,10 +87,10 @@ public:
     int32_t get_bearing_to_target() const { return _pos_control.get_bearing_to_target_cd(); }
 
     /// true if pilot control of radius and turn rate is enabled
-    bool pilot_control_enabled() const { return (_options.get() & CircleOptions::MANUAL_CONTROL) != 0; }
+    bool pilot_control_enabled() const { return (_options.get() & HeartOptions::MANUAL_CONTROL) != 0; }
 
     /// true if mount roi is at circle center
-    bool roi_at_center() const { return (_options.get() & CircleOptions::ROI_AT_CENTER) != 0; }
+    bool roi_at_center() const { return (_options.get() & HeartOptions::ROI_AT_CENTER) != 0; }
 
     /// provide rangefinder based terrain offset
     /// terrain offset is the terrain's height above the EKF origin
@@ -120,13 +120,13 @@ private:
         TERRAIN_FROM_RANGEFINDER,
         TERRAIN_FROM_TERRAINDATABASE,
     };
-    AC_Circle::TerrainSource get_terrain_source() const;
+    AC_Heart::TerrainSource get_terrain_source() const;
 
     // get terrain's altitude (in cm above the ekf origin) at the current position (+ve means terrain below vehicle is above ekf origin's altitude)
     bool get_terrain_offset(float& offset_cm);
 
     // flags structure
-    struct circle_flags {
+    struct heart_flags {
         uint8_t panorama    : 1;    // true if we are doing a panorama
     } _flags;
 
@@ -135,7 +135,7 @@ private:
     const AP_AHRS_View&         _ahrs;
     AC_PosControl&              _pos_control;
 
-    enum CircleOptions {
+    enum HeartOptions {
         MANUAL_CONTROL           = 1U << 0,
         FACE_DIRECTION_OF_TRAVEL = 1U << 1,
         INIT_AT_CENTER           = 1U << 2, // true then the circle center will be the current location, false and the center will be 1 radius ahead

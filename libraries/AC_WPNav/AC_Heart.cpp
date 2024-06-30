@@ -1,13 +1,13 @@
 #include <AP_HAL/AP_HAL.h>
 #include <AP_Math/AP_Math.h>
 #include <AP_Terrain/AP_Terrain.h>
-#include "AC_Circle.h"
+#include "AC_Heart.h"
 
 #include <AP_Logger/AP_Logger.h>
 
 extern const AP_HAL::HAL& hal;
 
-const AP_Param::GroupInfo AC_Circle::var_info[] = {
+const AP_Param::GroupInfo AC_Heart::var_info[] = {
     // @Param: RADIUS
     // @DisplayName: Circle Radius
     // @Description: Defines the radius of the circle the vehicle will fly when in Circle flight mode
@@ -15,7 +15,7 @@ const AP_Param::GroupInfo AC_Circle::var_info[] = {
     // @Range: 0 200000
     // @Increment: 100
     // @User: Standard
-    AP_GROUPINFO("RADIUS",  0,  AC_Circle, _radius_parm, AC_CIRCLE_RADIUS_DEFAULT),
+    AP_GROUPINFO("RADIUS",  0,  AC_Heart, _radius_parm, AC_HEART_RADIUS_DEFAULT),
 
     // @Param: RATE
     // @DisplayName: Circle rate
@@ -24,14 +24,14 @@ const AP_Param::GroupInfo AC_Circle::var_info[] = {
     // @Range: -90 90
     // @Increment: 1
     // @User: Standard
-    AP_GROUPINFO("RATE",    1, AC_Circle, _rate_parm,    AC_CIRCLE_RATE_DEFAULT),
+    AP_GROUPINFO("RATE",    1, AC_Heart, _rate_parm,    AC_HEART_RATE_DEFAULT),
 
     // @Param: OPTIONS
     // @DisplayName: Circle options
     // @Description: 0:Enable or disable using the pitch/roll stick control circle mode's radius and rate
     // @Bitmask: 0:manual control, 1:face direction of travel, 2:Start at center rather than on perimeter, 3:Make Mount ROI the center of the circle
     // @User: Standard
-    AP_GROUPINFO("OPTIONS", 2, AC_Circle, _options, 1),
+    AP_GROUPINFO("OPTIONS", 2, AC_Heart, _options, 1),
 
     AP_GROUPEND
 };
@@ -40,7 +40,7 @@ const AP_Param::GroupInfo AC_Circle::var_info[] = {
 // Note that the Vector/Matrix constructors already implicitly zero
 // their values.
 //
-AC_Circle::AC_Circle(const AP_InertialNav& inav, const AP_AHRS_View& ahrs, AC_PosControl& pos_control) :
+AC_Heart::AC_Heart(const AP_InertialNav& inav, const AP_AHRS_View& ahrs, AC_PosControl& pos_control) :
     _inav(inav),
     _ahrs(ahrs),
     _pos_control(pos_control)
@@ -55,7 +55,7 @@ AC_Circle::AC_Circle(const AP_InertialNav& inav, const AP_AHRS_View& ahrs, AC_Po
 /// init - initialise circle controller setting center specifically
 ///     set terrain_alt to true if center.z should be interpreted as an alt-above-terrain. Rate should be +ve in deg/sec for cw turn
 ///     caller should set the position controller's x,y and z speeds and accelerations before calling this
-void AC_Circle::init(const Vector3p& center, bool terrain_alt, float rate_deg_per_sec)
+void AC_Heart::init(const Vector3p& center, bool terrain_alt, float rate_deg_per_sec)
 {
     _center = center;
     _terrain_alt = terrain_alt;
@@ -74,7 +74,7 @@ void AC_Circle::init(const Vector3p& center, bool terrain_alt, float rate_deg_pe
 
 /// init - initialise circle controller setting center using stopping point and projecting out based on the copter's heading
 ///     caller should set the position controller's x,y and z speeds and accelerations before calling this
-void AC_Circle::init()
+void AC_Heart::init()
 {
     // initialize radius and rate from params
     _radius = _radius_parm;
@@ -90,7 +90,7 @@ void AC_Circle::init()
 
     // set circle center to circle_radius ahead of stopping point
     _center = stopping_point;
-    if ((_options.get() & CircleOptions::INIT_AT_CENTER) == 0) {
+    if ((_options.get() & HeartOptions::INIT_AT_CENTER) == 0) {
         _center.x += _radius * _ahrs.cos_yaw();
         _center.y += _radius * _ahrs.sin_yaw();
     }
@@ -104,7 +104,7 @@ void AC_Circle::init()
 }
 
 /// set circle center to a Location
-void AC_Circle::set_center(const Location& center)
+void AC_Heart::set_center(const Location& center)
 {
     if (center.get_alt_frame() == Location::AltFrame::ABOVE_TERRAIN) {
         // convert Location with terrain altitude
@@ -130,7 +130,7 @@ void AC_Circle::set_center(const Location& center)
 }
 
 /// set_circle_rate - set circle rate in degrees per second
-void AC_Circle::set_rate(float deg_per_sec)
+void AC_Heart::set_rate(float deg_per_sec)
 {
     if (!is_equal(deg_per_sec, _rate)) {
         _rate = deg_per_sec;
@@ -138,20 +138,20 @@ void AC_Circle::set_rate(float deg_per_sec)
 }
 
 /// set_circle_rate - set circle rate in degrees per second
-void AC_Circle::set_radius_cm(float radius_cm)
+void AC_Heart::set_radius_cm(float radius_cm)
 {
-    _radius = constrain_float(radius_cm, 0, AC_CIRCLE_RADIUS_MAX);
+    _radius = constrain_float(radius_cm, 0, AC_HEART_RADIUS_MAX);
 }
 
 /// returns true if update has been run recently
 /// used by vehicle code to determine if get_yaw() is valid
-bool AC_Circle::is_active() const
+bool AC_Heart::is_active() const
 {
     return (AP_HAL::millis() - _last_update_ms < 200);
 }
 
 /// update - update circle controller
-bool AC_Circle::update(float climb_rate_cms)
+bool AC_Heart::update(float climb_rate_cms)
 {
     calc_velocities(false);
 
@@ -202,7 +202,7 @@ bool AC_Circle::update(float climb_rate_cms)
         // heading is from vehicle to center of circle
         _yaw = get_bearing_cd(_inav.get_position_xy_cm(), _center.tofloat().xy());
 
-        if ((_options.get() & CircleOptions::FACE_DIRECTION_OF_TRAVEL) != 0) {
+        if ((_options.get() & HeartOptions::FACE_DIRECTION_OF_TRAVEL) != 0) {
             _yaw += is_positive(_rate)?-9000.0f:9000.0f;
             _yaw = wrap_360_cd(_yaw);
         }
@@ -232,12 +232,12 @@ bool AC_Circle::update(float climb_rate_cms)
     return true;
 }
 
-// get_closest_point_on_circle - returns closest point on the circle
+// get_closest_point_on_heart - returns closest point on the circle
 //  circle's center should already have been set
 //  closest point on the circle will be placed in result
 //  result's altitude (i.e. z) will be set to the circle_center's altitude
 //  if vehicle is at the center of the circle, the edge directly behind vehicle will be returned
-void AC_Circle::get_closest_point_on_circle(Vector3f &result) const
+void AC_Heart::get_closest_point_on_heart(Vector3f &result) const
 {
     // return center if radius is zero
     if (_radius <= 0) {
@@ -270,12 +270,12 @@ void AC_Circle::get_closest_point_on_circle(Vector3f &result) const
 // calc_velocities - calculate angular velocity max and acceleration based on radius and rate
 //      this should be called whenever the radius or rate are changed
 //      initialises the yaw and current position around the circle
-void AC_Circle::calc_velocities(bool init_velocity)
+void AC_Heart::calc_velocities(bool init_velocity)
 {
     // if we are doing a panorama set the circle_angle to the current heading
     if (_radius <= 0) {
         _angular_vel_max = ToRad(_rate);
-        _angular_accel = MAX(fabsf(_angular_vel_max),ToRad(AC_CIRCLE_ANGULAR_ACCEL_MIN));  // reach maximum yaw velocity in 1 second
+        _angular_accel = MAX(fabsf(_angular_vel_max),ToRad(AC_HEART_ANGULAR_ACCEL_MIN));  // reach maximum yaw velocity in 1 second
     }else{
         // calculate max velocity based on waypoint speed ensuring we do not use more than half our max acceleration for accelerating towards the center of the circle
         float velocity_max = MIN(_pos_control.get_max_speed_xy_cms(), safe_sqrt(0.5f*_pos_control.get_max_accel_xy_cmss()*_radius));
@@ -285,7 +285,7 @@ void AC_Circle::calc_velocities(bool init_velocity)
         _angular_vel_max = constrain_float(ToRad(_rate),-_angular_vel_max,_angular_vel_max);
 
         // angular_velocity in radians per second
-        _angular_accel = MAX(_pos_control.get_max_accel_xy_cmss()/_radius, ToRad(AC_CIRCLE_ANGULAR_ACCEL_MIN));
+        _angular_accel = MAX(_pos_control.get_max_accel_xy_cmss()/_radius, ToRad(AC_HEART_ANGULAR_ACCEL_MIN));
     }
 
     // initialise angular velocity
@@ -297,7 +297,7 @@ void AC_Circle::calc_velocities(bool init_velocity)
 // init_start_angle - sets the starting angle around the circle and initialises the angle_total
 //  if use_heading is true the vehicle's heading will be used to init the angle causing minimum yaw movement
 //  if use_heading is false the vehicle's position from the center will be used to initialise the angle
-void AC_Circle::init_start_angle(bool use_heading)
+void AC_Heart::init_start_angle(bool use_heading)
 {
     // initialise angle total
     _angle_total = 0;
@@ -325,38 +325,38 @@ void AC_Circle::init_start_angle(bool use_heading)
 }
 
 // get expected source of terrain data
-AC_Circle::TerrainSource AC_Circle::get_terrain_source() const
+AC_Heart::TerrainSource AC_Heart::get_terrain_source() const
 {
     // use range finder if connected
     if (_rangefinder_available) {
-        return AC_Circle::TerrainSource::TERRAIN_FROM_RANGEFINDER;
+        return AC_Heart::TerrainSource::TERRAIN_FROM_RANGEFINDER;
     }
 #if AP_TERRAIN_AVAILABLE
     const AP_Terrain *terrain = AP_Terrain::get_singleton();
     if ((terrain != nullptr) && terrain->enabled()) {
-        return AC_Circle::TerrainSource::TERRAIN_FROM_TERRAINDATABASE;
+        return AC_Heart::TerrainSource::TERRAIN_FROM_TERRAINDATABASE;
     } else {
-        return AC_Circle::TerrainSource::TERRAIN_UNAVAILABLE;
+        return AC_Heart::TerrainSource::TERRAIN_UNAVAILABLE;
     }
 #else
-    return AC_Circle::TerrainSource::TERRAIN_UNAVAILABLE;
+    return AC_Heart::TerrainSource::TERRAIN_UNAVAILABLE;
 #endif
 }
 
 // get terrain's altitude (in cm above the ekf origin) at the current position (+ve means terrain below vehicle is above ekf origin's altitude)
-bool AC_Circle::get_terrain_offset(float& offset_cm)
+bool AC_Heart::get_terrain_offset(float& offset_cm)
 {
     // calculate offset based on source (rangefinder or terrain database)
     switch (get_terrain_source()) {
-    case AC_Circle::TerrainSource::TERRAIN_UNAVAILABLE:
+    case AC_Heart::TerrainSource::TERRAIN_UNAVAILABLE:
         return false;
-    case AC_Circle::TerrainSource::TERRAIN_FROM_RANGEFINDER:
+    case AC_Heart::TerrainSource::TERRAIN_FROM_RANGEFINDER:
         if (_rangefinder_healthy) {
             offset_cm = _rangefinder_terrain_offset_cm;
             return true;
         }
         return false;
-    case AC_Circle::TerrainSource::TERRAIN_FROM_TERRAINDATABASE:
+    case AC_Heart::TerrainSource::TERRAIN_FROM_TERRAINDATABASE:
 #if AP_TERRAIN_AVAILABLE
         float terr_alt = 0.0f;
         AP_Terrain *terrain = AP_Terrain::get_singleton();
@@ -372,7 +372,7 @@ bool AC_Circle::get_terrain_offset(float& offset_cm)
     return false;
 }
 
-void AC_Circle::check_param_change()
+void AC_Heart::check_param_change()
 {
     if (!is_equal(_last_radius_param,_radius_parm.get())) {
         _radius = _radius_parm;
