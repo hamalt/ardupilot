@@ -306,6 +306,7 @@ public:
             ANGLE_RATE =       6,  // turn at a specified rate from a starting angle
             RATE =             7,  // turn at a specified rate (held in auto_yaw_rate)
             CIRCLE =           8,  // use AC_Circle's provided yaw (used during Loiter-Turns commands)
+            HEART =             81,
             PILOT_RATE =       9,  // target rate from pilot stick
             WEATHERVANE =     10,  // yaw into wind
         };
