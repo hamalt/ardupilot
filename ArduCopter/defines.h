@@ -40,6 +40,7 @@ enum tuning_func {
     TUNING_ACCEL_Z_KD =                 36, // accel based throttle controller's D term
     TUNING_DECLINATION =                38, // compass declination in radians
     TUNING_CIRCLE_RATE =                39, // circle turn rate in degrees (hard coded to about 45 degrees in either direction)
+    TUNING_HEART_RATE = 81,
     TUNING_ACRO_YAW_RATE =              40, // acro controller's desired yaw rate in deg/s
     TUNING_RANGEFINDER_GAIN =           41, // unused
     TUNING_EKF_VERTICAL_POS =           42, // unused

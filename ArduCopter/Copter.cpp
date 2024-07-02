@@ -406,6 +406,21 @@ bool Copter::set_circle_rate(float rate_dps)
 }
 #endif
 
+#if MODE_HEART_ENABLED == ENABLED
+// heart mode controls
+bool Copter::get_heart_radius(float &radius_m)
+{
+    radius_m = heart_nav->get_radius() * 0.01f;
+    return true;
+}
+
+bool Copter::set_heart_rate(float rate_dps)
+{
+    heart_nav->set_rate(rate_dps);
+    return true;
+}
+#endif
+
 // set desired speed (m/s). Used for scripting.
 bool Copter::set_desired_speed(float speed)
 {

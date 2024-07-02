@@ -473,6 +473,14 @@ void Copter::allocate_motors(void)
     AP_Param::load_object_from_eeprom(circle_nav, circle_nav->var_info);
 #endif
 
+#if MODE_HEART_ENABLED == ENABLED
+  heart_nav = new AC_Heart(inertial_nav, *ahrs_view, *pos_control);
+  if (heart_nav == nullptr) {
+    AP_BoardConfig::allocation_error("HeartNav");
+  }
+  AP_Param::load_object_from_eeprom(heart_nav, heart_nav->var_info);
+#endif
+
     // reload lines from the defaults file that may now be accessible
     AP_Param::reload_defaults_file(true);
     

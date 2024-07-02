@@ -522,6 +522,12 @@ bool RC_Channel_Copter::do_aux_function(const AUX_FUNC ch_option, const AuxSwitc
             break;
 #endif
 
+#if MODE_HEART_ENABLED == ENABLED
+        case AUX_FUNC::HEART:
+            do_aux_function_change_mode(Mode::Number::HEART, ch_flag);
+            break;
+#endif
+
 #if MODE_DRIFT_ENABLED == ENABLED
         case AUX_FUNC::DRIFT:
             do_aux_function_change_mode(Mode::Number::DRIFT, ch_flag);

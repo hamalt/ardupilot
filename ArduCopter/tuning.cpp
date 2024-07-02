@@ -148,6 +148,12 @@ void Copter::tuning()
         break;
 #endif
 
+#if MODE_HEART_ENABLED == ENABLED
+    case TUNING_HEART_RATE:
+        heart_nav->set_rate(tuning_value);
+        break;
+#endif
+
     case TUNING_RC_FEEL_RP:
         attitude_control->set_input_tc(tuning_value);
         break;
