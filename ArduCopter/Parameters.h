@@ -201,7 +201,7 @@ public:
         k_param_attitude_control,
         k_param_pos_control,
         k_param_circle_nav,
-        K_param_heart_nav,
+        k_param_heart_nav,
         k_param_loiter_nav,     // 105
         k_param_custom_control,
 
