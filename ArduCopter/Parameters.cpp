@@ -58,7 +58,7 @@ const AP_Param::Info Copter::var_info[] = {
     // @Units: Hz
     // @Range: 0 10
     // @Increment: .5
-    GSCALAR(throttle_filt, "PILOT_THR_FILT", 0),
+    GSCALAR(throttle_filt,  "PILOT_THR_FILT",     0),
 
     // @Param: PILOT_TKOFF_ALT
     // @DisplayName: Pilot takeoff altitude
@@ -67,7 +67,7 @@ const AP_Param::Info Copter::var_info[] = {
     // @Units: cm
     // @Range: 0.0 1000.0
     // @Increment: 10
-    GSCALAR(pilot_takeoff_alt, "PILOT_TKOFF_ALT", PILOT_TKOFF_ALT_DEFAULT),
+    GSCALAR(pilot_takeoff_alt,  "PILOT_TKOFF_ALT",   PILOT_TKOFF_ALT_DEFAULT),
 
     // @Param: PILOT_THR_BHV
     // @DisplayName: Throttle stick behavior
