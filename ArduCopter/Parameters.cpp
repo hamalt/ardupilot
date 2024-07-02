@@ -92,7 +92,7 @@ const AP_Param::Info Copter::var_info[] = {
     // @Description: bitmask of PIDs to send MAVLink PID_TUNING messages for
     // @User: Advanced
     // @Bitmask: 0:Roll,1:Pitch,2:Yaw,3:AccelZ
-    GSCALAR(gcs_pid_mask, "GCS_PID_MASK", 0),
+    GSCALAR(gcs_pid_mask,           "GCS_PID_MASK",     0),
 
 #if MODE_RTL_ENABLED == ENABLED
     // @Param: RTL_ALT
@@ -129,7 +129,7 @@ const AP_Param::Info Copter::var_info[] = {
     // @Range: 0 1000
     // @Increment: 1
     // @User: Standard
-    GSCALAR(rtl_alt_final, "RTL_ALT_FINAL", RTL_ALT_FINAL),
+    GSCALAR(rtl_alt_final,  "RTL_ALT_FINAL", RTL_ALT_FINAL),
 
     // @Param: RTL_CLIMB_MIN
     // @DisplayName: RTL minimum climb
@@ -306,24 +306,24 @@ const AP_Param::Info Copter::var_info[] = {
 
     // @Param: LOG_BITMASK
     // @DisplayName: Log bitmask
-    // @Description: Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basiclog types by setting this to 65535.
+    // @Description: Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basiclog types by setting this to 65535. 
     // @Bitmask: 0:Fast Attitude,1:Medium Attitude,2:GPS,3:System Performance,4:Control Tuning,5:Navigation Tuning,6:RC input,7:IMU,8:Mission Commands,9:Battery Monitor,10:RC output,11:Optical Flow,12:PID,13:Compass,15:Camera,17:Motors,18:Fast IMU,19:Raw IMU,20:Video Stabilization,21:Fast harmonic notch logging
     // @User: Standard
-    GSCALAR(log_bitmask, "LOG_BITMASK", DEFAULT_LOG_BITMASK),
+    GSCALAR(log_bitmask,    "LOG_BITMASK",          DEFAULT_LOG_BITMASK),
 
     // @Param: ESC_CALIBRATION
     // @DisplayName: ESC Calibration
     // @Description: Controls whether ArduCopter will enter ESC calibration on the next restart.  Do not adjust this parameter manually.
     // @User: Advanced
     // @Values: 0:Normal Start-up, 1:Start-up in ESC Calibration mode if throttle high, 2:Start-up in ESC Calibration mode regardless of throttle, 3:Start-up and automatically calibrate ESCs, 9:Disabled
-    GSCALAR(esc_calibrate, "ESC_CALIBRATION", 0),
+    GSCALAR(esc_calibrate, "ESC_CALIBRATION",       0),
 
     // @Param: TUNE
     // @DisplayName: Channel 6 Tuning
     // @Description: Controls which parameters (normally PID gains) are being tuned with transmitter's channel 6 knob
     // @User: Standard
     // @Values: 0:None,1:Stab Roll/Pitch kP,4:Rate Roll/Pitch kP,5:Rate Roll/Pitch kI,21:Rate Roll/Pitch kD,3:Stab Yaw kP,6:Rate Yaw kP,26:Rate Yaw kD,56:Rate Yaw Filter,55:Motor Yaw Headroom,14:AltHold kP,7:Throttle Rate kP,34:Throttle Accel kP,35:Throttle Accel kI,36:Throttle Accel kD,12:Loiter Pos kP,22:Velocity XY kP,28:Velocity XY kI,10:WP Speed,25:Acro Roll/Pitch deg/s,40:Acro Yaw deg/s,45:RC Feel,13:Heli Ext Gyro,38:Declination,39:Circle Rate,46:Rate Pitch kP,47:Rate Pitch kI,48:Rate Pitch kD,49:Rate Roll kP,50:Rate Roll kI,51:Rate Roll kD,52:Rate Pitch FF,53:Rate Roll FF,54:Rate Yaw FF,58:SysID Magnitude,59:PSC Angle Max,81:Heart Rate
-    GSCALAR(radio_tuning, "TUNE", 0),
+    GSCALAR(radio_tuning, "TUNE",                   0),
 
     // @Param: FRAME_TYPE
     // @DisplayName: Frame Type (+, X, V, etc)
@@ -335,7 +335,7 @@ const AP_Param::Info Copter::var_info[] = {
 
     // @Group: ARMING_
     // @Path: ../libraries/AP_Arming/AP_Arming.cpp
-    GOBJECT(arming, "ARMING_", AP_Arming_Copter),
+    GOBJECT(arming,                 "ARMING_", AP_Arming_Copter),
 
     // @Param: DISARM_DELAY
     // @DisplayName: Disarm delay
@@ -343,8 +343,8 @@ const AP_Param::Info Copter::var_info[] = {
     // @Units: s
     // @Range: 0 127
     // @User: Advanced
-    GSCALAR(disarm_delay, "DISARM_DELAY", AUTO_DISARMING_DELAY),
-
+    GSCALAR(disarm_delay, "DISARM_DELAY",           AUTO_DISARMING_DELAY),
+    
     // @Param: ANGLE_MAX
     // @DisplayName: Angle Max
     // @Description: Maximum lean angle in all flight modes
@@ -352,7 +352,7 @@ const AP_Param::Info Copter::var_info[] = {
     // @Increment: 10
     // @Range: 1000 8000
     // @User: Advanced
-    ASCALAR(angle_max, "ANGLE_MAX", DEFAULT_ANGLE_MAX),
+    ASCALAR(angle_max, "ANGLE_MAX",                 DEFAULT_ANGLE_MAX),
 
 #if MODE_POSHOLD_ENABLED == ENABLED
     // @Param: PHLD_BRAKE_RATE
@@ -361,7 +361,7 @@ const AP_Param::Info Copter::var_info[] = {
     // @Units: deg/s
     // @Range: 4 12
     // @User: Advanced
-    GSCALAR(poshold_brake_rate, "PHLD_BRAKE_RATE", POSHOLD_BRAKE_RATE_DEFAULT),
+    GSCALAR(poshold_brake_rate, "PHLD_BRAKE_RATE",  POSHOLD_BRAKE_RATE_DEFAULT),
 
     // @Param: PHLD_BRAKE_ANGLE
     // @DisplayName: PosHold braking angle max
@@ -370,7 +370,7 @@ const AP_Param::Info Copter::var_info[] = {
     // @Increment: 10
     // @Range: 2000 4500
     // @User: Advanced
-    GSCALAR(poshold_brake_angle_max, "PHLD_BRAKE_ANGLE", POSHOLD_BRAKE_ANGLE_DEFAULT),
+    GSCALAR(poshold_brake_angle_max, "PHLD_BRAKE_ANGLE",  POSHOLD_BRAKE_ANGLE_DEFAULT),
 #endif
 
     // @Param: LAND_REPOSITION
@@ -378,28 +378,28 @@ const AP_Param::Info Copter::var_info[] = {
     // @Description: Enables user input during LAND mode, the landing phase of RTL, and auto mode landings.
     // @Values: 0:No repositioning, 1:Repositioning
     // @User: Advanced
-    GSCALAR(land_repositioning, "LAND_REPOSITION", LAND_REPOSITION_DEFAULT),
+    GSCALAR(land_repositioning, "LAND_REPOSITION",     LAND_REPOSITION_DEFAULT),
 
     // @Param: FS_EKF_ACTION
     // @DisplayName: EKF Failsafe Action
     // @Description: Controls the action that will be taken when an EKF failsafe is invoked
     // @Values: 1:Land, 2:AltHold, 3:Land even in Stabilize
     // @User: Advanced
-    GSCALAR(fs_ekf_action, "FS_EKF_ACTION", FS_EKF_ACTION_DEFAULT),
+    GSCALAR(fs_ekf_action, "FS_EKF_ACTION",    FS_EKF_ACTION_DEFAULT),
 
     // @Param: FS_EKF_THRESH
     // @DisplayName: EKF failsafe variance threshold
     // @Description: Allows setting the maximum acceptable compass, velocity, position and height variances. Used in arming check and EKF failsafe.
     // @Values: 0.6:Strict, 0.8:Default, 1.0:Relaxed
     // @User: Advanced
-    GSCALAR(fs_ekf_thresh, "FS_EKF_THRESH", FS_EKF_THRESHOLD_DEFAULT),
+    GSCALAR(fs_ekf_thresh, "FS_EKF_THRESH",    FS_EKF_THRESHOLD_DEFAULT),
 
     // @Param: FS_CRASH_CHECK
     // @DisplayName: Crash check enable
     // @Description: This enables automatic crash checking. When enabled the motors will disarm if a crash is detected.
     // @Values: 0:Disabled, 1:Enabled
     // @User: Advanced
-    GSCALAR(fs_crash_check, "FS_CRASH_CHECK", 1),
+    GSCALAR(fs_crash_check, "FS_CRASH_CHECK",    1),
 
     // @Param: RC_SPEED
     // @DisplayName: ESC Update Speed
@@ -408,7 +408,7 @@ const AP_Param::Info Copter::var_info[] = {
     // @Range: 50 490
     // @Increment: 1
     // @User: Advanced
-    GSCALAR(rc_speed, "RC_SPEED", RC_FAST_SPEED),
+    GSCALAR(rc_speed, "RC_SPEED",              RC_FAST_SPEED),
 
 #if MODE_ACRO_ENABLED == ENABLED || MODE_SPORT_ENABLED == ENABLED
     // @Param: ACRO_BAL_ROLL
@@ -417,7 +417,7 @@ const AP_Param::Info Copter::var_info[] = {
     // @Range: 0 3
     // @Increment: 0.1
     // @User: Advanced
-    GSCALAR(acro_balance_roll, "ACRO_BAL_ROLL", ACRO_BALANCE_ROLL),
+    GSCALAR(acro_balance_roll,      "ACRO_BAL_ROLL",    ACRO_BALANCE_ROLL),
 
     // @Param: ACRO_BAL_PITCH
     // @DisplayName: Acro Balance Pitch
@@ -425,7 +425,7 @@ const AP_Param::Info Copter::var_info[] = {
     // @Range: 0 3
     // @Increment: 0.1
     // @User: Advanced
-    GSCALAR(acro_balance_pitch, "ACRO_BAL_PITCH", ACRO_BALANCE_PITCH),
+    GSCALAR(acro_balance_pitch,     "ACRO_BAL_PITCH",   ACRO_BALANCE_PITCH),
 #endif
 
     // ACRO_RP_EXPO moved to Command Model class
@@ -436,7 +436,7 @@ const AP_Param::Info Copter::var_info[] = {
     // @Description: Type of trainer used in acro mode
     // @Values: 0:Disabled,1:Leveling,2:Leveling and Limited
     // @User: Advanced
-    GSCALAR(acro_trainer, "ACRO_TRAINER", (uint8_t)ModeAcro::Trainer::LIMITED),
+    GSCALAR(acro_trainer,   "ACRO_TRAINER",     (uint8_t)ModeAcro::Trainer::LIMITED),
 #endif
 
     // variables not in the g class which contain EEPROM saved variables
@@ -450,7 +450,7 @@ const AP_Param::Info Copter::var_info[] = {
 #if AP_RELAY_ENABLED
     // @Group: RELAY
     // @Path: ../libraries/AP_Relay/AP_Relay.cpp
-    GOBJECT(relay, "RELAY", AP_Relay),
+    GOBJECT(relay,                  "RELAY", AP_Relay),
 #endif
 
 #if PARACHUTE == ENABLED
@@ -462,7 +462,7 @@ const AP_Param::Info Copter::var_info[] = {
 #if AP_LANDINGGEAR_ENABLED
     // @Group: LGR_
     // @Path: ../libraries/AP_LandingGear/AP_LandingGear.cpp
-    GOBJECT(landinggear, "LGR_", AP_LandingGear),
+    GOBJECT(landinggear,    "LGR_", AP_LandingGear),
 #endif
 
 #if FRAME_CONFIG == HELI_FRAME
@@ -473,15 +473,15 @@ const AP_Param::Info Copter::var_info[] = {
 
     // @Group: COMPASS_
     // @Path: ../libraries/AP_Compass/AP_Compass.cpp
-    GOBJECT(compass, "COMPASS_", Compass),
+    GOBJECT(compass,        "COMPASS_", Compass),
 
     // @Group: INS
     // @Path: ../libraries/AP_InertialSensor/AP_InertialSensor.cpp
-    GOBJECT(ins, "INS", AP_InertialSensor),
+    GOBJECT(ins,            "INS", AP_InertialSensor),
 
     // @Group: WPNAV_
     // @Path: ../libraries/AC_WPNav/AC_WPNav.cpp
-    GOBJECTPTR(wp_nav, "WPNAV_", AC_WPNav),
+    GOBJECTPTR(wp_nav, "WPNAV_",       AC_WPNav),
 
     // @Group: LOIT_
     // @Path: ../libraries/AC_WPNav/AC_Loiter.cpp
@@ -490,7 +490,7 @@ const AP_Param::Info Copter::var_info[] = {
 #if MODE_CIRCLE_ENABLED == ENABLED
     // @Group: CIRCLE_
     // @Path: ../libraries/AC_WPNav/AC_Circle.cpp
-    GOBJECTPTR(circle_nav, "CIRCLE_", AC_Circle),
+    GOBJECTPTR(circle_nav, "CIRCLE_",  AC_Circle),
 #endif
 
 // TODO: Parameters.hに`K_param_heart_nav`を追加してるのに、これを追加するとコンパイルエラーになる
@@ -510,72 +510,72 @@ GOBJECTVARPTR(attitude_control, "ATC_", &copter.attitude_control_var_info),
 
     // @Group: SR0_
     // @Path: GCS_Mavlink.cpp
-    GOBJECTN(_gcs.chan_parameters[0], gcs0, "SR0_", GCS_MAVLINK_Parameters),
+    GOBJECTN(_gcs.chan_parameters[0],  gcs0,       "SR0_",     GCS_MAVLINK_Parameters),
 
 #if MAVLINK_COMM_NUM_BUFFERS >= 2
     // @Group: SR1_
     // @Path: GCS_Mavlink.cpp
-    GOBJECTN(_gcs.chan_parameters[1], gcs1, "SR1_", GCS_MAVLINK_Parameters),
+    GOBJECTN(_gcs.chan_parameters[1],  gcs1,       "SR1_",     GCS_MAVLINK_Parameters),
 #endif
 
 #if MAVLINK_COMM_NUM_BUFFERS >= 3
     // @Group: SR2_
     // @Path: GCS_Mavlink.cpp
-    GOBJECTN(_gcs.chan_parameters[2], gcs2, "SR2_", GCS_MAVLINK_Parameters),
+    GOBJECTN(_gcs.chan_parameters[2],  gcs2,       "SR2_",     GCS_MAVLINK_Parameters),
 #endif
 
 #if MAVLINK_COMM_NUM_BUFFERS >= 4
     // @Group: SR3_
     // @Path: GCS_Mavlink.cpp
-    GOBJECTN(_gcs.chan_parameters[3], gcs3, "SR3_", GCS_MAVLINK_Parameters),
+    GOBJECTN(_gcs.chan_parameters[3],  gcs3,       "SR3_",     GCS_MAVLINK_Parameters),
 #endif
 
 #if MAVLINK_COMM_NUM_BUFFERS >= 5
     // @Group: SR4_
     // @Path: GCS_Mavlink.cpp
-    GOBJECTN(_gcs.chan_parameters[4], gcs4, "SR4_", GCS_MAVLINK_Parameters),
+    GOBJECTN(_gcs.chan_parameters[4],  gcs4,       "SR4_",     GCS_MAVLINK_Parameters),
 #endif
 
 #if MAVLINK_COMM_NUM_BUFFERS >= 6
     // @Group: SR5_
     // @Path: GCS_Mavlink.cpp
-    GOBJECTN(_gcs.chan_parameters[5], gcs5, "SR5_", GCS_MAVLINK_Parameters),
+    GOBJECTN(_gcs.chan_parameters[5],  gcs5,       "SR5_",     GCS_MAVLINK_Parameters),
 #endif
 
 #if MAVLINK_COMM_NUM_BUFFERS >= 7
     // @Group: SR6_
     // @Path: GCS_Mavlink.cpp
-    GOBJECTN(_gcs.chan_parameters[6], gcs6, "SR6_", GCS_MAVLINK_Parameters),
+    GOBJECTN(_gcs.chan_parameters[6],  gcs6,       "SR6_",     GCS_MAVLINK_Parameters),
 #endif
 
     // @Group: AHRS_
     // @Path: ../libraries/AP_AHRS/AP_AHRS.cpp
-    GOBJECT(ahrs, "AHRS_", AP_AHRS),
+    GOBJECT(ahrs,                   "AHRS_",    AP_AHRS),
 
 #if HAL_MOUNT_ENABLED
     // @Group: MNT
     // @Path: ../libraries/AP_Mount/AP_Mount.cpp
-    GOBJECT(camera_mount, "MNT", AP_Mount),
+    GOBJECT(camera_mount,           "MNT",  AP_Mount),
 #endif
 
     // @Group: BATT
     // @Path: ../libraries/AP_BattMonitor/AP_BattMonitor.cpp
-    GOBJECT(battery, "BATT", AP_BattMonitor),
+    GOBJECT(battery,                "BATT",         AP_BattMonitor),
 
     // @Group: BRD_
     // @Path: ../libraries/AP_BoardConfig/AP_BoardConfig.cpp
-    GOBJECT(BoardConfig, "BRD_", AP_BoardConfig),
+    GOBJECT(BoardConfig,            "BRD_",       AP_BoardConfig),
 
 #if HAL_MAX_CAN_PROTOCOL_DRIVERS
     // @Group: CAN_
     // @Path: ../libraries/AP_CANManager/AP_CANManager.cpp
-    GOBJECT(can_mgr, "CAN_", AP_CANManager),
+    GOBJECT(can_mgr,        "CAN_",       AP_CANManager),
 #endif
 
 #if HAL_SPRAYER_ENABLED
     // @Group: SPRAY_
     // @Path: ../libraries/AC_Sprayer/AC_Sprayer.cpp
-    GOBJECT(sprayer, "SPRAY_", AC_Sprayer),
+    GOBJECT(sprayer,                "SPRAY_",       AC_Sprayer),
 #endif
 
 #if AP_SIM_ENABLED
@@ -600,19 +600,19 @@ GOBJECTVARPTR(attitude_control, "ATC_", &copter.attitude_control_var_info),
     // @Group: AVOID_
     // @Path: ../libraries/AC_Avoidance/AC_Avoid.cpp
 #if AP_AVOIDANCE_ENABLED
-    GOBJECT(avoid, "AVOID_", AC_Avoid),
+    GOBJECT(avoid,      "AVOID_",   AC_Avoid),
 #endif
 
 #if HAL_RALLY_ENABLED
     // @Group: RALLY_
     // @Path: AP_Rally.cpp,../libraries/AP_Rally/AP_Rally.cpp
-    GOBJECT(rally, "RALLY_", AP_Rally_Copter),
+    GOBJECT(rally,      "RALLY_",   AP_Rally_Copter),
 #endif
 
 #if FRAME_CONFIG == HELI_FRAME
     // @Group: H_
     // @Path: ../libraries/AP_Motors/AP_MotorsHeli_Single.cpp,../libraries/AP_Motors/AP_MotorsHeli_Dual.cpp,../libraries/AP_Motors/AP_MotorsHeli.cpp
-    GOBJECTVARPTR(motors, "H_", &copter.motors_var_info),
+    GOBJECTVARPTR(motors, "H_",        &copter.motors_var_info),
 #else
     // @Group: MOT_
     // @Path: ../libraries/AP_Motors/AP_MotorsMulticopter.cpp
@@ -621,7 +621,7 @@ GOBJECTVARPTR(attitude_control, "ATC_", &copter.attitude_control_var_info),
 
     // @Group: RCMAP_
     // @Path: ../libraries/AP_RCMapper/AP_RCMapper.cpp
-    GOBJECT(rcmap, "RCMAP_", RCMapper),
+    GOBJECT(rcmap, "RCMAP_",        RCMapper),
 
 #if HAL_NAVEKF2_AVAILABLE
     // @Group: EK2_
@@ -643,24 +643,24 @@ GOBJECTVARPTR(attitude_control, "ATC_", &copter.attitude_control_var_info),
 
     // @Group: RSSI_
     // @Path: ../libraries/AP_RSSI/AP_RSSI.cpp
-    GOBJECT(rssi, "RSSI_", AP_RSSI),
+    GOBJECT(rssi, "RSSI_",  AP_RSSI),
     
 #if RANGEFINDER_ENABLED == ENABLED
     // @Group: RNGFND
     // @Path: ../libraries/AP_RangeFinder/AP_RangeFinder.cpp
-    GOBJECT(rangefinder, "RNGFND", RangeFinder),
+    GOBJECT(rangefinder,   "RNGFND", RangeFinder),
 #endif
 
 #if AP_TERRAIN_AVAILABLE
     // @Group: TERRAIN_
     // @Path: ../libraries/AP_Terrain/AP_Terrain.cpp
-    GOBJECT(terrain, "TERRAIN_", AP_Terrain),
+    GOBJECT(terrain,                "TERRAIN_", AP_Terrain),
 #endif
 
 #if AP_OPTICALFLOW_ENABLED
     // @Group: FLOW
     // @Path: ../libraries/AP_OpticalFlow/AP_OpticalFlow.cpp
-    GOBJECT(optflow, "FLOW", AP_OpticalFlow),
+    GOBJECT(optflow,   "FLOW", AP_OpticalFlow),
 #endif
 
 #if AC_PRECLAND_ENABLED
@@ -678,7 +678,7 @@ GOBJECTVARPTR(attitude_control, "ATC_", &copter.attitude_control_var_info),
 #if HAL_ADSB_ENABLED
     // @Group: ADSB_
     // @Path: ../libraries/AP_ADSB/AP_ADSB.cpp
-    GOBJECT(adsb, "ADSB_", AP_ADSB),
+    GOBJECT(adsb,                "ADSB_", AP_ADSB),
 
     // @Group: AVD_
     // @Path: ../libraries/AP_Avoidance/AP_Avoidance.cpp
@@ -687,7 +687,7 @@ GOBJECTVARPTR(attitude_control, "ATC_", &copter.attitude_control_var_info),
 
     // @Group: NTF_
     // @Path: ../libraries/AP_Notify/AP_Notify.cpp
-    GOBJECT(notify, "NTF_", AP_Notify),
+    GOBJECT(notify, "NTF_",  AP_Notify),
 
 #if MODE_THROW_ENABLED == ENABLED
     // @Param: THROW_MOT_START
@@ -726,7 +726,7 @@ GOBJECTVARPTR(attitude_control, "ATC_", &copter.attitude_control_var_info),
 
     // @Group:
     // @Path: Parameters.cpp
-    GOBJECT(g2, "", ParametersG2),
+    GOBJECT(g2, "",  ParametersG2),
 
     // @Group:
     // @Path: ../libraries/AP_Vehicle/AP_Vehicle.cpp
