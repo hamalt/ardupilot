@@ -97,6 +97,7 @@ void Mode::AutoYaw::set_mode(Mode yaw_mode)
         break;
 
     case Mode::CIRCLE:
+    case Mode::HEART:
     case Mode::PILOT_RATE:
     case Mode::WEATHERVANE:
         // no initialisation required
@@ -249,6 +250,13 @@ float Mode::AutoYaw::yaw_cd()
         }
 #endif
         break;
+    case Mode::HEART:
+#if MODE_HEART_ENABLED
+        if (copter.heart_nav->is_active()) {
+            _yaw_angle_cd = copter.heart_nav->get_yaw();
+        }
+#endif
+        break;
 
     case Mode::ANGLE_RATE:{
         const uint32_t now_ms = millis();
@@ -287,6 +295,7 @@ float Mode::AutoYaw::rate_cds()
     case Mode::LOOK_AHEAD:
     case Mode::RESETTOARMEDYAW:
     case Mode::CIRCLE:
+    case Mode::HEART:
         _yaw_rate_cds = 0.0f;
         break;
 
@@ -345,6 +354,7 @@ AC_AttitudeControl::HeadingCommand Mode::AutoYaw::get_heading()
         case Mode::RESETTOARMEDYAW:
         case Mode::ANGLE_RATE:
         case Mode::CIRCLE:
+        case Mode::HEART:
             heading.heading_mode = AC_AttitudeControl::HeadingMode::Angle_And_Rate;
             break;
     }

@@ -104,6 +104,7 @@ public:
         k_param_acro_trainer,
         k_param_pilot_speed_up,         // renamed from k_param_pilot_velocity_z_max
         k_param_circle_rate,            // deprecated - remove
+        k_param_heart_rate,            // deprecated - remove
         k_param_rangefinder_gain,       // deprecated - remove
         k_param_ch8_option_old,         // deprecated
         k_param_arming_check_old,       // deprecated - remove
@@ -200,6 +201,7 @@ public:
         k_param_attitude_control,
         k_param_pos_control,
         k_param_circle_nav,
+        k_param_heart_nav,
         k_param_loiter_nav,     // 105
         k_param_custom_control,
 
@@ -333,6 +335,7 @@ public:
         k_param_command_nav_index,   // remove
         k_param_waypoint_radius,     // remove
         k_param_circle_radius,       // remove
+        k_param_heart_radius,
         k_param_waypoint_speed_max,  // remove
         k_param_land_speed,
         k_param_auto_velocity_z_min, // remove

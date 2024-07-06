@@ -53,6 +53,7 @@
 #include <AC_WPNav/AC_WPNav.h>              // ArduCopter waypoint navigation library
 #include <AC_WPNav/AC_Loiter.h>             // ArduCopter Loiter Mode Library
 #include <AC_WPNav/AC_Circle.h>             // circle navigation library
+#include <AC_WPNav/AC_Heart.h>              // heart navigation library
 #include <AP_Declination/AP_Declination.h>  // ArduPilot Mega Declination Helper Library
 #include <AP_RCMapper/AP_RCMapper.h>        // RC input mapping library
 #include <AP_BattMonitor/AP_BattMonitor.h>  // Battery monitor library
@@ -205,6 +206,7 @@ public:
     friend class ModeAvoidADSB;
     friend class ModeBrake;
     friend class ModeCircle;
+    friend class ModeHeart;
     friend class ModeDrift;
     friend class ModeFlip;
     friend class ModeFlowHold;
@@ -216,6 +218,7 @@ public:
     friend class ModeRTL;
     friend class ModeSmartRTL;
     friend class ModeSport;
+    friend class ModeMyfirst;
     friend class ModeStabilize;
     friend class ModeStabilize_Heli;
     friend class ModeSystemId;
@@ -487,6 +490,10 @@ private:
     AC_Circle *circle_nav;
 #endif
 
+#if MODE_HEART_ENABLED == ENABLED
+    AC_Heart *heart_nav;
+#endif
+
     // System Timers
     // --------------
     // arm_time_ms - Records when vehicle was armed. Will be Zero if we are disarmed.
@@ -685,6 +692,13 @@ private:
 #if MODE_CIRCLE_ENABLED == ENABLED
     bool get_circle_radius(float &radius_m) override;
     bool set_circle_rate(float rate_dps) override;
+#endif
+#if MODE_HEART_ENABLED == ENABLED
+    bool get_heart_radius(float &radius_m);
+    bool set_heart_rate(float rate_dps);
+#endif
+#if MODE_HEART_ENABLED == ENABLED
+    // TODO: for heart code?
 #endif
     bool set_desired_speed(float speed) override;
 #if MODE_AUTO_ENABLED == ENABLED
@@ -996,6 +1010,9 @@ private:
 #if MODE_CIRCLE_ENABLED == ENABLED
     ModeCircle mode_circle;
 #endif
+#if MODE_HEART_ENABLED == ENABLED
+    ModeHeart mode_heart;
+#endif
 #if MODE_DRIFT_ENABLED == ENABLED
     ModeDrift mode_drift;
 #endif
@@ -1021,6 +1038,7 @@ private:
 #if FRAME_CONFIG == HELI_FRAME
     ModeStabilize_Heli mode_stabilize;
 #else
+    ModeMyfirst mode_myfirst;
     ModeStabilize mode_stabilize;
 #endif
 #if MODE_SPORT_ENABLED == ENABLED
